@@ -1,13 +1,20 @@
-import { useAuthStore } from "../stores/authStore"
+import { ChatPanel } from '../components/ChatPanel';
+import { ChecklistPanel } from '../components/ChecklistPanel';
+import { Header } from '../components/Header';
+import styles from './DashboardPage.module.css';
 
 export default function DashboardPage() {
-  const currentUser = useAuthStore(state => state.currentUser)
-  const logout = useAuthStore(state => state.logout)
-
   return (
-    <>
-      <div>{currentUser?.name}</div>
-      <button onClick={logout}>Выход</button>
-    </>
-  )
+    <div className={styles.page}>
+      <Header />
+      <div className={styles.body}>
+        <div className={styles.chatColumn}>
+          <ChatPanel />
+        </div>
+        <div className={styles.checklistColumn}>
+          <ChecklistPanel />
+        </div>
+      </div>
+    </div>
+  );
 }

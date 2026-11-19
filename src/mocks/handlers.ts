@@ -32,57 +32,41 @@ export const handlers = [
 
   // POST /api/chat — отправка сообщения, получаем ответ бота
   http.post('/api/chat', async ({ request }) => {
-    const body = (await request.json()) as { message: string };
+    const body = (await request.json()) as { message?: string };
+    const message = body.message?.trim() ?? '';
+
+    // Валидация как в Go: пустое сообщение → 400
+    if (!message) {
+      return HttpResponse.json({ error: 'Введите сообщение.' }, { status: 400 });
+    }
+
     await delay(1500);
+    const text = message.toLowerCase();
 
-    const text = body.message.toLowerCase();
-
-    // Простейшая "логика" бота на ключевых словах
+    // Простая логика по ключевым словам — имитация агента
     if (text.includes('отгул')) {
       return HttpResponse.json({
-        id: crypto.randomUUID(),
-        author: 'bot',
-        content: 'Вот порядок оформления отгула. Проверь детали и подтверди.',
-        createdAt: new Date().toISOString(),
-        actionCard: {
-          kind: 'leave_request',
-          title: 'Оформление отгула',
-          fields: [
-            { label: 'Дата', value: '15 ноября 2026' },
-            { label: 'Причина', value: 'личное' },
-            { label: 'Порядок', value: 'согласование с руководителем' },
-          ],
-          status: 'proposal',
-        },
+        reply:
+          'Порядок оформления отгула: создай заявку в сервисе отсутствий, укажи дату 15 ноября и причину «личное», затем согласуй с руководителем.\n[ACTION:leave_request]',
       });
     }
 
-    if (text.includes('наставник')) {
-      return HttpResponse.json({
-        id: crypto.randomUUID(),
-        author: 'bot',
-        content: 'Твой наставник — Иван Петров, @ivan_petrov. Он поможет с рабочими вопросами.',
-        createdAt: new Date().toISOString(),
-      });
-    }
-
-    if (text.includes('доступ') || text.includes('jira')) {
-      return HttpResponse.json({
-        id: crypto.randomUUID(),
-        author: 'bot',
-        content: 'Для доступа к Jira напиши своему наставнику @ivan_petrov. Он откроет заявку.',
-        createdAt: new Date().toISOString(),
-      });
-    }
-
-    // Ответ по умолчанию
+  if (text.includes('наставник')) {
     return HttpResponse.json({
-      id: crypto.randomUUID(),
-      author: 'bot',
-      content: 'Я пока учусь. Спроси про отгул, наставника или доступы.',
-      createdAt: new Date().toISOString(),
+      reply: 'Твой наставник — Иван Петров, @ivan_petrov. Он поможет с рабочими вопросами.',
     });
-  }),
+  }
+
+  if (text.includes('доступ') || text.includes('jira')) {
+    return HttpResponse.json({
+      reply: 'Для доступа к Jira напиши наставнику @ivan_petrov. Он откроет заявку.',
+    });
+  }
+
+  return HttpResponse.json({
+    reply: 'Я пока учусь. Спроси про отгул, наставника или доступы.',
+  });
+}),
 
   // POST /api/actions/leave-request — имитация оформления отгула
   http.post('/api/actions/leave-request', async () => {

@@ -27,6 +27,7 @@ export const ChecklistItemStatusSchema = z.enum([
 export const ChecklistItemSchema = z.object({
   id: z.string(),
   title: z.string(),
+  description: z.string().optional(),
   status: ChecklistItemStatusSchema,
   blockedReason: z.string().optional(),
 });
@@ -77,3 +78,17 @@ export const LeaveRequestResponseSchema = z.object({
   message: z.string(),
 });
 export type LeaveRequestResponse = z.infer<typeof LeaveRequestResponseSchema>;
+
+
+
+// То, что реально отдаёт бэкенд на POST /api/chat
+export const ChatApiResponseSchema = z.object({
+  reply: z.string(),
+});
+export type ChatApiResponse = z.infer<typeof ChatApiResponseSchema>;
+
+// То, что бэкенд отдаёт при ошибке
+export const ChatApiErrorSchema = z.object({
+  error: z.string(),
+});
+export type ChatApiError = z.infer<typeof ChatApiErrorSchema>;

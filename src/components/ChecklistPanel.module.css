@@ -1,0 +1,179 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--color-bg);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.progressTrack {
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progressLabel {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.stages {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stage {
+  border-bottom: 1px solid var(--color-chip-bg);
+}
+
+.stage:last-child {
+  border-bottom: none;
+}
+
+.stageHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.stageDone {
+  color: var(--color-success);
+}
+
+.stageCount {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.items {
+  padding-left: 24px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.itemDone {
+  text-decoration: line-through;
+  color: var(--color-text-subtle);
+}
+
+.itemText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.itemDescription {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.checkbox {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checkboxDone {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.checkboxInProgress {
+  border-color: var(--color-accent);
+  background: var(--color-accent-bg);
+}
+
+.badge {
+  margin-left: auto;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.badgeBlocked {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+}
+
+.nextStep {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-card);
+  padding: 16px;
+}
+
+.nextStepTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.nextStepText {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.nextStepButton {
+  width: 100%;
+  padding: 8px 16px;
+  background: var(--color-accent);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-button);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.nextStepButton:hover {
+  background: var(--color-accent-hover);
+}

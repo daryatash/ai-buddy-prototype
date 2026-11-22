@@ -32,7 +32,7 @@
 - **Zustand** — состояние (`chatStore`, `authStore`)
 - **TanStack Query** — запросы и кеш
 - **Zod** — валидация ответов API
-- **React Router** — роутинг (`/login`, `/chat`, `/team`, `/adaptation`)
+- **React Router** — роутинг (`/login`, `/dashboard`)
 - **MSW** — моки API в браузере и тестах
 - **Vitest** + **React Testing Library** — тесты
 - **CSS-модули** — стили, переменные в `index.css`

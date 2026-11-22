@@ -1,75 +1,38 @@
-# React + TypeScript + Vite
+# AI-buddy — ИИ-наставник для стажёров
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Прототип фронтенда для хакатона Hack&Change, кейс Авито. AI-buddy помогает стажёру освоиться в новой команде: отвечает на вопросы о процессах и инструментах, помогает найти ответственного, подготовить обращение и следить за прогрессом адаптации.
 
-Currently, two official plugins are available:
+Это **прототип фронтенда на моках**. Представляет UX и сценарии, а не полное production-решение.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Демо
 
-## React Compiler
+- **Демо:** https://daryatash.github.io/ai-buddy-prototype/
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Страница авторизации
+![Выбор тестового пользователя](./images/login.png)
 
-## Expanding the ESLint configuration
+- Чат и чеклист
+![Чат и чеклист](./images/dashboard.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Возможности
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Имитация чата с ИИ-помощником.** Ответы на вопросы о команде, инструментах и процессах. Оптимистичное добавление сообщений, индикатор «печатает», обработка ошибок.
+- **Карточка действия.** Если ответ требует действия (например, оформление отгула), бот прикрепляет карточку с полями и кнопками. Три состояния: `proposal` → `sending` → `result`. Поля можно редактировать.
+- **Чек-лист адаптации.** Этапы, задачи, статусы (`done`, `in_progress`, `todo`, `blocked`) , следующий шаг.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Сценарии демо
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **Вход и знакомство.** Выберите тестового пользователя. Откроется чат с приветствием, справа — чек-лист с прогрессом.
+2. **Вопрос про инструмент.** Спросите «Где получить доступ к Jira?». Бот ответит и подскажет, к кому обратиться.
+3. **Карточка действия.** Спросите «Как оформить отгул?». Бот вернёт карточку. Нажмите «Изменить», поменяйте причину, «Сохранить», затем «Подтвердить» — карточка перейдёт в `result` с номером запроса.
 
-```
+## Стек
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+- **React 18** + **TypeScript** + **Vite**
+- **Zustand** — состояние (`chatStore`, `authStore`)
+- **TanStack Query** — запросы и кеш
+- **Zod** — валидация ответов API
+- **React Router** — роутинг (`/login`, `/chat`, `/team`, `/adaptation`)
+- **MSW** — моки API в браузере и тестах
+- **Vitest** + **React Testing Library** — тесты
+- **CSS-модули** — стили, переменные в `index.css`

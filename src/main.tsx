@@ -15,12 +15,13 @@ const queryClient = new QueryClient({
 })
 
 async function enableMocking() {
-  if (import.meta.env.DEV) {
-    const { worker } = await import('./mocks/browser');
-    return worker.start({
-      onUnhandledFrame: 'bypass',
-    });
-  }
+  const { worker } = await import('./mocks/browser');
+  return worker.start({
+    serviceWorker: {
+      url: `${import.meta.env.BASE_URL}mockServiceWorker.js`,
+    },
+    onUnhandledFrame: 'bypass',
+  });
 }
 
 enableMocking().then(() => {

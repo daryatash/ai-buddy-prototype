@@ -43,29 +43,28 @@ export const handlers = [
     await delay(1500);
     const text = message.toLowerCase();
 
-    // Простая логика по ключевым словам — имитация агента
     if (text.includes('отгул')) {
       return HttpResponse.json({
         reply:
-          'Порядок оформления отгула: создай заявку в сервисе отсутствий, укажи дату 15 ноября и причину «личное», затем согласуй с руководителем.\n[ACTION:leave_request]',
+          'Порядок оформления отгула: создай заявку в сервисе отсутствий, укажи дату и причину «личное», затем согласуй с руководителем.\n[ACTION:leave_request]',
       });
     }
 
-  if (text.includes('наставник')) {
-    return HttpResponse.json({
-      reply: 'Твой наставник — Иван Петров, @ivan_petrov. Он поможет с рабочими вопросами.',
-    });
-  }
+    if (text.includes('наставник')) {
+      return HttpResponse.json({
+        reply: 'Твой наставник — Иван Петров, @ivan_petrov. Он поможет с рабочими вопросами.',
+      });
+    }
 
-  if (text.includes('доступ') || text.includes('jira')) {
-    return HttpResponse.json({
-      reply: 'Для доступа к Jira напиши наставнику @ivan_petrov. Он откроет заявку.',
-    });
-  }
+    if (text.includes('доступ') || text.includes('jira')) {
+      return HttpResponse.json({
+        reply: 'Для доступа к Jira напиши наставнику @ivan_petrov. Он откроет заявку.',
+      });
+    }
 
-  return HttpResponse.json({
-    reply: 'Я пока учусь. Спроси про отгул, наставника или доступы.',
-  });
+    return HttpResponse.json({
+      reply: 'Я пока учусь. Спроси про отгул, наставника или доступы.',
+    });
 }),
 
   // POST /api/actions/leave-request — имитация оформления отгула

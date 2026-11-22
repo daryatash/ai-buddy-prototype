@@ -48,18 +48,20 @@ export type Checklist = z.infer<typeof ChecklistSchema>;
 
 export const MessageAuthorSchema = z.enum(['user', 'bot']);
 
+export const ActionCardFieldSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+  editable: z.boolean().optional(),
+  type: z.enum(['text', 'date']).optional(),
+});
+
 export const ActionCardSchema = z.object({
   kind: z.literal('leave_request'),
   title: z.string(),
-  fields: z.array(
-    z.object({
-      label: z.string(),
-      value: z.string(),
-    }),
-  ),
+  fields: z.array(ActionCardFieldSchema),
   status: z.enum(['proposal', 'sending', 'result']),
-  resultMessage: z.string().optional(),
   requestId: z.string().optional(),
+  resultMessage: z.string().optional(),
 });
 export type ActionCard = z.infer<typeof ActionCardSchema>;
 

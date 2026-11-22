@@ -51,6 +51,9 @@ body {
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  scrollbar-gutter: auto;
 }
 
 input:focus-visible,

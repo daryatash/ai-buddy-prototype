@@ -5,10 +5,8 @@ import AppRouter from './router/AppRouter';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppRouter>
-        
-      </AppRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <AppRouter />
     </BrowserRouter>
   );
 }

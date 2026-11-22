@@ -26,9 +26,9 @@ describe('ChecklistPanel', () => {
     renderWithQuery(<ChecklistPanel />);
     await waitFor(
       () => {
-        expect(screen.getByText('1 неделя')).toBeInTheDocument();
-        expect(screen.getByText('2 неделя')).toBeInTheDocument();
-        expect(screen.getByText('1 месяц')).toBeInTheDocument();
+        expect(screen.getByText('Первый день')).toBeInTheDocument();
+        expect(screen.getByText('Первая неделя')).toBeInTheDocument();
+        expect(screen.getByText('Первый месяц')).toBeInTheDocument();
       },
       { timeout: 3000 },
     );
@@ -49,13 +49,8 @@ describe('ChecklistPanel', () => {
     await waitFor(
       () => {
         const nextStepTitle = screen.getByText('Следующий шаг');
-        // Ищем текст задачи внутри карточки «Следующий шаг», а не по всему документу
         const nextStepBlock = nextStepTitle.parentElement!;
-        expect(
-          within(nextStepBlock).getByText(
-            /Попроси руководителя или наставника добавить тебя в канал Tech-dep/,
-          ),
-        ).toBeInTheDocument();
+        expect(within(nextStepBlock).getByText('Изучить Playbook')).toBeInTheDocument();
       },
       { timeout: 3000 },
     );

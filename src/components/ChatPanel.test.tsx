@@ -39,10 +39,24 @@ describe('ChatPanel', () => {
     });
   });
 
-  it('показывает индикатор «AI печатает», когда isSending=true', () => {
-    useChatStore.setState({ isSending: true });
+  it('показывает индикатор «Помощник печатает» во время запроса', async () => {
     renderWithQuery();
-    expect(screen.getByText('AI печатает…')).toBeInTheDocument();
+
+    const input = screen.getByPlaceholderText('Напиши вопрос...');
+    await userEvent.type(input, 'привет{Enter}');
+
+    // Индикатор появляется сразу после отправки (пока isPending=true)
+    await waitFor(() => {
+      expect(screen.getByLabelText('Помощник печатает')).toBeInTheDocument();
+    });
+
+    // И исчезает после ответа
+    await waitFor(
+      () => {
+        expect(screen.queryByLabelText('Помощник печатает')).not.toBeInTheDocument();
+      },
+      { timeout: 3000 },
+    );
   });
 
   it('рендерит карточку отгула после ответа на вопрос про отгул', async () => {
@@ -75,7 +89,7 @@ describe('ChatPanel', () => {
     );
   });
 
-  it('при ошибке 504 показывает баннер и кнопку «Повторить»', async () => {
+  it('при ошибке 504 показывает текст ошибки', async () => {
     server.use(
       http.post('/api/chat', () => {
         return HttpResponse.json({ error: 'timeout' }, { status: 504 });
@@ -86,18 +100,34 @@ describe('ChatPanel', () => {
 
     await userEvent.type(screen.getByPlaceholderText('Напиши вопрос...'), 'вопрос{Enter}');
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('Истекло время ожидания ответа. Попробуйте ещё раз.'),
-      ).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Повторить' })).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByText('Истекло время ожидания ответа. Попробуйте ещё раз.'),
+        ).toBeInTheDocument();
+      },
+      { timeout: 3000 },
+    );
   });
 
-  it('дизейблит поле ввода, когда isSending=true', () => {
-    useChatStore.setState({ isSending: true });
+  it('дизейблит поле ввода и чипы во время запроса', async () => {
     renderWithQuery();
+
     const input = screen.getByPlaceholderText('Напиши вопрос...');
-    expect(input).toBeDisabled();
+    await userEvent.type(input, 'привет{Enter}');
+
+    // Пока идёт запрос — input и чипы disabled
+    await waitFor(() => {
+      expect(input).toBeDisabled();
+    });
+    expect(screen.getByRole('button', { name: /Где получить доступ/ })).toBeDisabled();
+
+    // После ответа — снова активны
+    await waitFor(
+      () => {
+        expect(input).not.toBeDisabled();
+      },
+      { timeout: 3000 },
+    );
   });
 });

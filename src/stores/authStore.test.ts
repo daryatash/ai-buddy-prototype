@@ -13,7 +13,7 @@ describe('authStore', () => {
 
   it('setCurrentUser кладёт пользователя и вычисляет права', () => {
     const intern = mockUsers[0];
-    useAuthStore.getState().setCurrentUser(intern);
+    useAuthStore.getState().login(intern);
 
     expect(useAuthStore.getState().currentUser).toEqual(intern);
     expect(useAuthStore.getState().permissions).toContain('view_mentor_contacts');
@@ -21,7 +21,7 @@ describe('authStore', () => {
   });
 
   it('logout очищает пользователя и права', () => {
-    useAuthStore.getState().setCurrentUser(mockUsers[0]);
+    useAuthStore.getState().login(mockUsers[0]);
     useAuthStore.getState().logout();
 
     expect(useAuthStore.getState().currentUser).toBeNull();
@@ -29,12 +29,12 @@ describe('authStore', () => {
   });
 
   it('hasPermission возвращает true для доступного права', () => {
-    useAuthStore.getState().setCurrentUser(mockUsers[1]);
+    useAuthStore.getState().login(mockUsers[1]);
     expect(useAuthStore.getState().hasPermission('approve_leave_request')).toBe(true);
   });
 
   it('hasPermission возвращает false для недоступного права', () => {
-    useAuthStore.getState().setCurrentUser(mockUsers[0]);
+    useAuthStore.getState().login(mockUsers[0]);
     expect(useAuthStore.getState().hasPermission('approve_leave_request')).toBe(false);
   });
 });
